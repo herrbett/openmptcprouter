@@ -42,6 +42,7 @@ UPSTREAM=${UPSTREAM:-no}
 #SYSLOG=${SYSLOG:-syslog-ng}
 SYSLOG=${SYSLOG:-logd}
 OMR_KERNEL=${OMR_KERNEL:-5.4}
+OMR_JOBS=${OMR_JOBS:-$(nproc)}
 SHORTCUT_FE=${SHORTCUT_FE:-no}
 DISABLE_FAILSAFE=${DISABLE_FAILSAFE:-no}
 #OMR_RELEASE=${OMR_RELEASE:-$(git describe --tags `git rev-list --tags --max-count=1` | sed 's/^\([0-9.]*\).*/\1/')}
@@ -538,6 +539,13 @@ echo "Checking if smsc75xx patch is set or not"
 if ! patch -Rf -N -p1 -s --dry-run < ../../../patches/smsc75xx.patch; then
 	echo "apply..."
 	patch -N -p1 -s < ../../../patches/smsc75xx.patch
+fi
+echo "Done"
+
+echo "Fixing ppp package hash mismatch"
+if grep -q "677b71d23b668db986146e13b0c651f2ac506eb4fb244ffba1ff406cbae3511b" package/network/services/ppp/Makefile 2>/dev/null; then
+	sed -i 's/677b71d23b668db986146e13b0c651f2ac506eb4fb244ffba1ff406cbae3511b/381668ce1547afeaf599f08ae37935bfd3d5841747c62bca5a870c11e3e9bedb/' package/network/services/ppp/Makefile
+	echo "applied"
 fi
 echo "Done"
 
@@ -1104,7 +1112,7 @@ if [ ! -f "../../../$OMR_TARGET_CONFIG" ] || [ "$NOT_SUPPORTED" = "1" ]; then
 	exit 1
 fi
 [ "$ONLY_PREPARE" = "yes" ] && exit 0
-echo "Building $OMR_DIST for the target $OMR_TARGET with kernel ${OMR_KERNEL}"
+echo "Building $OMR_DIST for the target $OMR_TARGET with kernel ${OMR_KERNEL} using ${OMR_JOBS} jobs"
 make defconfig
-make IGNORE_ERRORS=m "$@"
+make -j${OMR_JOBS} IGNORE_ERRORS=m "$@"
 echo "Done"
