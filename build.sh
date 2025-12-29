@@ -542,13 +542,6 @@ if ! patch -Rf -N -p1 -s --dry-run < ../../../patches/smsc75xx.patch; then
 fi
 echo "Done"
 
-echo "Fixing ppp package hash mismatch"
-if grep -q "677b71d23b668db986146e13b0c651f2ac506eb4fb244ffba1ff406cbae3511b" package/network/services/ppp/Makefile 2>/dev/null; then
-	sed -i 's/677b71d23b668db986146e13b0c651f2ac506eb4fb244ffba1ff406cbae3511b/381668ce1547afeaf599f08ae37935bfd3d5841747c62bca5a870c11e3e9bedb/' package/network/services/ppp/Makefile
-	echo "applied"
-fi
-echo "Done"
-
 #echo "Checking if ipt-nat patch is set or not"
 #if ! patch -Rf -N -p1 -s --dry-run < ../../../patches/ipt-nat6.patch; then
 #	echo "apply..."
