@@ -883,6 +883,13 @@ if [ "$OMR_KERNEL" = "6.12" ]; then
 	echo "Done"
 	echo "Set to kernel 6.12 for qualcommax"
 	find target/linux/qualcommax -type f -name Makefile -exec sed -i 's%KERNEL_PATCHVER:=6.6%KERNEL_PATCHVER:=6.12%g' {} \;
+	echo "Adding missing kernel config options for qualcommax"
+	echo "CONFIG_VHOST_ENABLE_FORK_OWNER_CONTROL=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_ARM64_4K_PAGES=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_QCA807X_PHY=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_QCA808X_PHY=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_MDIO_IPQ4019=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_AT803X_PHY=y" >> target/linux/qualcommax/config-6.12
 	echo "Done"
 	echo "Set to kernel 6.12 for ipq40xx"
 	find target/linux/ipq40xx -type f -name Makefile -exec sed -i 's%KERNEL_PATCHVER:=6.6%KERNEL_PATCHVER:=6.12%g' {} \;
@@ -933,6 +940,13 @@ if [ "$OMR_KERNEL" = "6.17" ]; then
 	echo "Done"
 	echo "Set to kernel 6.12 for qualcommax"
 	find target/linux/qualcommax -type f -name Makefile -exec sed -i 's%KERNEL_PATCHVER:=6.6%KERNEL_PATCHVER:=6.12%g' {} \;
+	echo "Adding missing kernel config options for qualcommax"
+	echo "CONFIG_VHOST_ENABLE_FORK_OWNER_CONTROL=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_ARM64_4K_PAGES=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_QCA807X_PHY=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_QCA808X_PHY=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_MDIO_IPQ4019=y" >> target/linux/qualcommax/config-6.12
+	echo "CONFIG_AT803X_PHY=y" >> target/linux/qualcommax/config-6.12
 	echo "Done"
 	echo "Set to kernel 6.12 for ipq40xx"
 	find target/linux/ipq40xx -type f -name Makefile -exec sed -i 's%KERNEL_PATCHVER:=6.6%KERNEL_PATCHVER:=6.12%g' {} \;
